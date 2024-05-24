@@ -43,7 +43,7 @@ func newAmbulancesAPI() AmbulancesAPI {
 
 func (this *implAmbulancesAPI) addRoutes(routerGroup *gin.RouterGroup) {
   routerGroup.Handle( http.MethodPost, "/ambulances", this.CreateAmbulance)
-  routerGroup.Handle( http.MethodDelete, "/ambulance/:ambulanceId", this.DeleteAmbulance)
+  routerGroup.Handle( http.MethodDelete, "/ambulances/:ambulanceId", this.DeleteAmbulance)
   routerGroup.Handle( http.MethodGet, "/ambulances", this.GetAmbulanceList)
 }
 
