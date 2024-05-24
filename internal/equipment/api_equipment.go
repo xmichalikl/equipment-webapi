@@ -30,6 +30,9 @@ type EquipmentAPI interface {
 	// GetEquipmentById - Get specific equipment details
 	GetEquipmentById(ctx *gin.Context)
 
+	// GetEquipmentList - Provides the equipment list for a specific ambulance
+	GetEquipmentList(ctx *gin.Context)
+
 	// UpdateEquipmentById - Update specific equipment details
 	UpdateEquipmentById(ctx *gin.Context)
 
@@ -48,6 +51,7 @@ func (this *implEquipmentAPI) addRoutes(routerGroup *gin.RouterGroup) {
   routerGroup.Handle( http.MethodPost, "/ambulances/:ambulanceId/equipment", this.CreateEquipment)
   routerGroup.Handle( http.MethodDelete, "/ambulances/:ambulanceId/equipment/:equipmentId", this.DeleteEquipmentById)
   routerGroup.Handle( http.MethodGet, "/ambulances/:ambulanceId/equipment/:equipmentId", this.GetEquipmentById)
+  routerGroup.Handle( http.MethodGet, "/ambulances/:ambulanceId/equipment", this.GetEquipmentList)
   routerGroup.Handle( http.MethodPut, "/ambulances/:ambulanceId/equipment/:equipmentId", this.UpdateEquipmentById)
 }
 
@@ -66,6 +70,12 @@ func (this *implEquipmentAPI) addRoutes(routerGroup *gin.RouterGroup) {
 
 // // GetEquipmentById - Get specific equipment details
 // func (this *implEquipmentAPI) GetEquipmentById(ctx *gin.Context) {
+//  	ctx.AbortWithStatus(http.StatusNotImplemented)
+// }
+//
+
+// // GetEquipmentList - Provides the equipment list for a specific ambulance
+// func (this *implEquipmentAPI) GetEquipmentList(ctx *gin.Context) {
 //  	ctx.AbortWithStatus(http.StatusNotImplemented)
 // }
 //

@@ -12,14 +12,16 @@ info:
     name: CC BY 4.0
     url: 'https://creativecommons.org/licenses/by/4.0/'
 tags:
-  - name: ambulanceEquipment
-    description: Ambulance Equipment API
+  - name: ambulances
+    description: Ambulance details
+  - name: equipment
+    description: Equipment details
 
 paths:
   '/ambulances':
     get:
       tags:
-        - ambulanceList
+        - ambulances
       summary: Provides the list of ambulances
       operationId: getAmbulanceList
       description: Retrieves a list of all ambulances
@@ -37,11 +39,62 @@ paths:
                   $ref: '#/components/examples/AmbulanceListExample'
         '404':
           description: No ambulances found
+          
+    post:
+      tags:
+        - ambulances
+      summary: Create new ambulance
+      operationId: createAmbulance
+      description: Create new ambulance in the system 
+      requestBody:
+        description: Ambulance details to store
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Ambulance"
+            examples:
+              request-sample:
+                $ref: "#/components/examples/AmbulanceExample"
+      responses:
+        "201":
+          description: Ambulance item successfully created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ambulance"
+              examples:
+                updated-response:
+                  $ref: "#/components/examples/AmbulanceExample"
+        "400":
+          description: Missing mandatory properties of input object.
+        "409":
+          description: Ambulance with the specified id already exists
+
+  "/ambulances/{ambulanceId}":
+    delete:
+      tags:
+        - ambulances
+      summary: Deletes specific ambulance
+      operationId: deleteAmbulance
+      description: Use this method to delete the specific ambulance by its ID
+      parameters:
+        - in: path
+          name: ambulanceId
+          description: ID of the particular ambulance
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Ambulance item successfully deleted
+        "404":
+          description: Ambulance with such ID does not exist
 
   '/ambulances/{ambulanceId}/equipment':
     get:
       tags:
-        - equipmentList
+        - equipment
       summary: Provides the equipment list for a specific ambulance
       operationId: getEquipmentList
       description: Retrieves a list of equipment for a specific ambulance by its ID
@@ -105,7 +158,7 @@ paths:
         '404':
           description: Ambulance with such ID does not exists
         '409':
-          description: Entry with the specified id already exists
+          description: Ambulance with the specified id already exists
 
   '/ambulances/{ambulanceId}/equipment/{equipmentId}':
     get:
@@ -221,6 +274,12 @@ components:
         name:
           type: string
           description: Name of the ambulance
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+      example:
+        $ref: "#/components/examples/AmbulanceExample"
 
     Equipment:
       type: object
@@ -251,8 +310,46 @@ components:
       value:
         - id: '664fb9ef7e5c4ebbaf305cb5'
           name: 'Ambulance One'
+          equipment:
+            - id: '664fb9ef7e5c4ebbaf305c31'
+              name: 'Blood Pupm'
+              availability: 'available'
+              lastInspectionDate: '2024-05-22T08:17:23.950Z'
+              technicalCondition: 3
+              inspectionInterval: 3
         - id: '664fb9f74291d1a939502e9d'
           name: 'Ambulance Two'
+          equipment:
+            - id: '664fb9ef7e5c4ebbaf305cb1'
+              name: 'Defibrillator'
+              availability: 'available'
+              lastInspectionDate: '2024-05-22T08:17:23.950Z'
+              technicalCondition: 2
+              inspectionInterval: 6
+            - id: '664fb9f74291e1a939502e9d'
+              name: 'Oxygen Tank'
+              availability: 'maintenance'
+              lastInspectionDate: '2024-05-22T08:17:23.950Z'
+              technicalCondition: 4
+              inspectionInterval: 12
+    
+    AmbulanceExample:
+      value: 
+        id: '664fb9ef7e5c4ebbaf305cb5'
+        name: 'Ambulance One'
+        equipment:
+          - id: '664fb9ef7e5c4ebbaf305cb1'
+            name: 'Defibrillator'
+            availability: 'available'
+            lastInspectionDate: '2024-05-22T08:17:23.950Z'
+            technicalCondition: 2
+            inspectionInterval: 6
+          - id: '664fb9f74291e1a939502e9d'
+            name: 'Oxygen Tank'
+            availability: 'maintenance'
+            lastInspectionDate: '2024-05-22T08:17:23.950Z'
+            technicalCondition: 4
+            inspectionInterval: 12
 
     EquipmentListExample:
       value:
