@@ -1,0 +1,7 @@
+internal/equipment/README.md
+internal/equipment/api_ambulance_list.go
+internal/equipment/api_equipment.go
+internal/equipment/api_equipment_list.go
+internal/equipment/model_ambulance.go
+internal/equipment/model_equipment.go
+internal/equipment/routers.go

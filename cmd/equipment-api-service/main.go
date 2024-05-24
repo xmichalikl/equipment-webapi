@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/xmichalikl/equipment-webapi/api"
+	"github.com/xmichalikl/equipment-webapi/internal/equipment"
 )
 
 func main() {
@@ -22,6 +23,7 @@ func main() {
 	engine := gin.New()
 	engine.Use(gin.Recovery())
 	// request routings
+	equipment.AddRoutes(engine)
 	engine.GET("/openapi", api.HandleOpenApi)
 	engine.Run(":" + port)
 }
