@@ -22,11 +22,38 @@ func (this *implEquipmentAPI) CreateEquipment(ctx *gin.Context) {
 			}, http.StatusBadRequest
 		}
 
-		// TODO: Add other checks
 		if newEquipment.Name == "" {
 			return nil, gin.H{
 				"status":  http.StatusBadRequest,
 				"message": "Name is required",
+			}, http.StatusBadRequest
+		}
+
+		if newEquipment.Availability == "" {
+			return nil, gin.H{
+				"status":  http.StatusBadRequest,
+				"message": "Availability is required",
+			}, http.StatusBadRequest
+		}
+
+		if newEquipment.LastInspectionDate.IsZero() {
+			return nil, gin.H{
+				"status":  http.StatusBadRequest,
+				"message": "Last InspectionDate is required",
+			}, http.StatusBadRequest
+		}
+
+		if newEquipment.TechnicalCondition == 0 {
+			return nil, gin.H{
+				"status":  http.StatusBadRequest,
+				"message": "TechnicalCondition is required",
+			}, http.StatusBadRequest
+		}
+
+		if newEquipment.InspectionInterval == 0 {
+			return nil, gin.H{
+				"status":  http.StatusBadRequest,
+				"message": "InspectionInterval is required",
 			}, http.StatusBadRequest
 		}
 

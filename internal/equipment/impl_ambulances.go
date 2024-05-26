@@ -47,6 +47,28 @@ func (this *implAmbulancesAPI) CreateAmbulance(ctx *gin.Context) {
 		return
 	}
 
+	if ambulance.Name == "" {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"status":  "Bad Request",
+				"message": "Name is required",
+				"error":   "Name field is empty",
+			})
+		return
+	}
+
+	if ambulance.Equipment == nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{
+				"status":  "Bad Request",
+				"message": "Equipment is required",
+				"error":   "Equipment field is null",
+			})
+		return
+	}
+
 	if ambulance.Id == "" {
 		ambulance.Id = uuid.New().String()
 	}
