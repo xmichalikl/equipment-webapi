@@ -18,5 +18,6 @@ type Ambulance struct {
 	// Name of the ambulance
 	Name string `json:"name"`
 
-	Equipment []Equipment `json:"equipment,omitempty"`
+	// List of the ambulance equipment
+	Equipment []Equipment `json:"equipment"`
 }
